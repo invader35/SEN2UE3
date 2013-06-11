@@ -1,0 +1,106 @@
+\documentclass[10pt,a4paper, parskip=half]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{ucs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[superscript]{cite}
+\author{Schett Matthias}
+\title{SEN-Übung 2.3}
+\begin{document}
+\definecolor{gray}{rgb}{0.9,0.9,0.9}
+\lstset{language=[Visual]Basic, morekeywords={param, local}}
+\maketitle
+
+\section{Aufgabe 1}
+\label{sec:Aufgabe1}
+
+\subsection{L\"{o}sungsidee}
+Es soll ein Programm erstellt werden dass Testdaten nach folgender Grammatik ausgibt:
+
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}]
+{Grammar.txt}
+
+Die einzelnen Daten sollen mittels Zufallszahlengenerator ermittelt werden.
+Zu Beginn wird der Dateikopf geschrieben, die übernimmt die interne writeFileHeader() Funktion.
+Danach werden die einzelnen Werte ermittelt und ebenfalls in die Datei geschrieben
+Die Angaben zum Dateinamen und der Anzahl der zu generierenden Testdaten, wird mittels Kommandozeilenparamenter übergeben.
+
+\paragraph{Beispiel} % (fold)
+\label{par:Beispiel}
+TestDataGenerator.exe TestFile1.txt 300
+\newline
+Generiert ein TestFile1.txt mit 300 Testwerten.
+
+\subsection{Programmcode in C++}
+
+Der Programmcode Aufgabe befindet sich im Anhang
+
+\subsection{Testf\"{a}lle}
+Als Testfälle werden 3 Dateien erzeugt TestFile1.txt mit 10, TestFile2.txt mit 20 und TestFile3.txt mit 24 Einträgen.
+Der Aufruf sieht daher so aus:
+\newline
+\indent TestDataCreator.exe TestFile1.txt 10 TestFile2.txt 20 TestFile3.txt 24
+
+\newpage
+\section{Aufgabe 2}
+
+\subsection{L\"{o}sungsidee}
+\nameref{sec:Aufgabe1} soll nun so erweitert werden, dass die Grammatik der erstellten Dateien geprüft wird und eine Schnittmenge aller 
+Test Daten in eine Result.txt geschrieben werden.
+Dafür gibt es nun die Methoden checkGrammar().
+checkGrammar() prüft zuerst den Dateikopf und anschließend den Rest der Datei bei einem Fehler wird \"unkown file format\" und die Stelle
+an der sich der Fehler befindet ausgegeben.
+
+Anschließend werden unter zuhilfe Name von std::set(siehe \ref{subsubsec:Set}) alle Werte der Datei gepseichert. 
+
+Das wird mit allen Dateien wiederholt.
+Anschließend wird über den Inhalt der std::set Datenstruktur iteriert und jeder Eintrag in die Result.txt geschrieben.
+
+\subsubsection{Informationen zu std::set}
+\label{subsubsec:Set}
+
+Die Datenstruktur std::set ist eine dynamische Datenstruktur ähnlich der einzel und doppelt verketteten Listen.
+Alle in ihr befindlichen Einträgen sind aufsteigend sortiert.
+\newline Weiters sind alle Einträge in einem std::set einzigartig, dieser Umstand wird bei jedem insert() geprüft, dadurch eignet sie sich
+besonders für diese Aufgabe.
+
+\subsection{Programmcode in C++}
+
+Der Programmcode befindet sich im Anhang
+
+\subsection{Testf\"{a}lle}
+Die Testfälle sind indentisch mit denen aus \nameref{sec:Aufgabe1}
+
+\newpage
+\appendix
+\section{Programmcode in C++}
+
+\subsection{CheckGrammar Modul Header}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{TestDataCreator/GrammarCheck.h}
+
+\subsection{CheckGrammar Modul Implmentierung}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{TestDataCreator/GrammarCheck.cpp}
+
+\newpage
+\subsection{TestDataCreator Modul Header}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{TestDataCreator/TestDataCreator.h}
+
+\subsection{TestDataCreator Modul Implmentierung}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{TestDataCreator/TestDataCreator.cpp}
+
+\newpage
+\subsection{Testreiber}
+\lstinputlisting[breaklines=true, tabsize=4, showstringspaces=false,backgroundcolor=\color{gray}, numbers=left]
+{TestDataCreator/Main.cpp}
+
+\end{document}
